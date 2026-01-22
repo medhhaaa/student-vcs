@@ -13,12 +13,12 @@ from core.undo import undo_last_commit
 from core.exporter import export_repo
 from core.importer import import_repo
 
-
 if len(sys.argv) < 2:
     print("Usage: vcs <command>")
     sys.exit()
 
 command = sys.argv[1]
+
 
 if command == "init":
     result = init_repo()
