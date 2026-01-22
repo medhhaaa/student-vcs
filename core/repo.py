@@ -4,6 +4,7 @@ import json
 VCS_DIR = ".myvcs"
 OBJECTS_DIR = ".myvcs/objects"
 INDEX_FILE = ".myvcs/index.json"
+COMMITS_FILE = ".myvcs/commits.json"
 
 def init_repo():
     if os.path.exists(VCS_DIR):
@@ -17,6 +18,10 @@ def init_repo():
 
     file = open(INDEX_FILE, "w")
     file.write("{}")
+    file.close()
+
+    file = open(COMMITS_FILE, "w")
+    file.write("[]")
     file.close()
 
     return {
