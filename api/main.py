@@ -1,17 +1,15 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
 
 from core.status import get_status
+from core.repo import init_repo
 from core.log import get_log
 from core.commit import make_commit
 from core.undo import undo_last_commit
 from core.exporter import export_repo
 from core.importer import import_repo
 
-app = FastAPI(title="Student VCS API")
-
-
-# ---------- MODELS (for POST requests) ----------
+from pydantic import BaseModel
+app = FastAPI(title="welcstudent-vcsome")
 
 class CommitRequest(BaseModel):
     message: str
@@ -22,10 +20,12 @@ class ExportRequest(BaseModel):
 class ImportRequest(BaseModel):
     filename: str
 
-
-# ---------- ROUTES ----------
-
 @app.get("/")
+def greet():
+    return "welcome to ashils and medhas project"
+
+
+@app.get("/home")
 def home():
     return {"message": "Student VCS backend is running"}
 
@@ -34,27 +34,22 @@ def home():
 def status():
     return get_status()
 
-
 @app.get("/log")
 def log():
     return get_log()
 
-
 @app.post("/commit")
-def commit(data: CommitRequest):
+def commit(data:CommitRequest):
     return make_commit(data.message)
-
 
 @app.post("/undo")
 def undo():
     return undo_last_commit()
 
-
 @app.post("/export")
-def export(data: ExportRequest):
+def export(data:ExportRequest):
     return export_repo(data.filename)
 
-
 @app.post("/import")
-def import_repo_api(data: ImportRequest):
+def importer(data:ImportRequest):
     return import_repo(data.filename)
